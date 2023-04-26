@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/fm-interactive-comments-section/static/js/main.4f47fa0d.js",
+    "main.js": "/fm-interactive-comments-section/static/js/main.740ce8bc.js",
     "index.html": "/fm-interactive-comments-section/index.html",
-    "main.4f47fa0d.js.map": "/fm-interactive-comments-section/static/js/main.4f47fa0d.js.map"
+    "main.740ce8bc.js.map": "/fm-interactive-comments-section/static/js/main.740ce8bc.js.map"
   },
   "entrypoints": [
-    "static/js/main.4f47fa0d.js"
+    "static/js/main.740ce8bc.js"
   ]
 }

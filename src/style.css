@@ -57,6 +57,10 @@ select {
   font: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -88,7 +92,7 @@ select {
   --color-primary-700: hsl(238, 40%, 52%);
 
   --body-color: var(--color-neutral-800);
-  --background-color: var(--color-primary-500);
+  --background-color: var(--color-neutral-300);
   --content-color: var(--color-neutral-100);
 
   --font-family: "Rubik", Helvetica, sans-serif;
@@ -108,12 +112,91 @@ body {
 }
 
 article,
-div:not(#root) {
+div:not(#root, .container),
+.input {
   background-color: var(--content-color);
+}
+
+.hidden {
+  position: absolute;
+  top: -1000em;
+  visibility: hidden;
 }
 
 .container {
   margin-inline: auto;
-  max-width: 900px;
+  max-width: 750px;
   width: calc(100% - 3em);
+}
+
+.comments,
+.replies {
+  background-color: var(--background-color) !important;
+  display: grid;
+  gap: 1em;
+}
+
+.comment {
+  border-radius: 1em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 1em;
+}
+
+.comment__score-controls-wrapper {
+  display: grid;
+  padding: 1em;
+  place-content: center;
+}
+.comment__score-controls {
+  background-color: var(--color-neutral-300) !important;
+  border-radius: 0.5em;
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-500);
+  display: grid;
+  gap: 0.3em;
+  padding: 0.25em 0.5em;
+  text-align: center;
+}
+
+.comment__score-controls > button {
+  border: 0;
+  background-color: transparent;
+  color: var(--color-primary-500);
+  font-weight: var(--font-weight-600);
+}
+
+.comment__header {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: auto auto auto 1fr;
+}
+
+.comment__user-pic {
+  aspect-ratio: 1;
+  width: 35px;
+}
+
+.comment__username {
+  color: var(--color-neutral-900);
+  font-weight: var(--font-weight-500);
+}
+
+.comment__time-added {
+  color: var(--color-neutral-800);
+  font-weight: var(--font-weight-600);
+}
+
+.comment__reply-button {
+  background-color: transparent;
+  background-image: url(./images/icon-reply.svg);
+  background-position: left center;
+  background-repeat: no-repeat;
+  border: 0;
+  color: var(--color-primary-700);
+  font-weight: 700;
+  margin-inline-start: auto;
+  padding-inline-start: 1.25em;
+  width: -moz-fit-content;
+  width: fit-content;
 }

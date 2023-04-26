@@ -9,28 +9,35 @@ function App() {
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, score, user } = comment;
 
-    console.log(user.image.png);
-
     return (
       <Comment
         key={id}
         score={score}
-        userPic={`${user.image.png}`}
+        userPic={user.image.png}
         username={user.username}
         timeAdded={createdAt}
         content={content}
-        /*replies={replies}*/
+        replies={replies}
       />
     );
   });
 
-  console.log(commentsElements);
-
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-      {commentsElements}
-    </div>
+    <>
+      <section className="comments">{commentsElements}</section>
+      <section className="input">
+        <img
+          alt={currentUser.username}
+          className="input__user-img"
+          src={currentUser.image.png}
+        />
+        <form className="input__form">
+          <label htmlFor="comment">Enter a new comment</label>
+          <input id="comment" placeholder="Add a comment..."></input>
+          <button>Send</button>
+        </form>
+      </section>
+    </>
   );
 }
 

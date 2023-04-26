@@ -1,6 +1,10 @@
 import React from "react";
+import Replies from "./Replies";
+
 export default function Comment(props) {
-  const { score, userPic, username, timeAdded, content, replies } = props;
+  const { score, userPic, username, timeAdded, content, replies, replyingTo } =
+    props;
+
   return (
     <article className="comment">
       <div>
@@ -19,8 +23,11 @@ export default function Comment(props) {
             Reply
           </button>
         </div>
-        <p>{content}</p>
-        {/*replies*/}
+        <p>
+          <span>{replyingTo && `@${replyingTo} `}</span>
+          {content}
+        </p>
+        {replies && <Replies replies={replies} />}
       </div>
     </article>
   );

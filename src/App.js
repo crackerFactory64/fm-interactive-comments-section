@@ -33,8 +33,10 @@ function App() {
           src={currentUser.image.png}
         />
         <form className="input__form">
-          <label htmlFor="comment">Enter a new comment</label>
-          <input id="comment" placeholder="Add a comment..."></input>
+          <label htmlFor="comment" className="hidden">
+            Enter a new comment
+          </label>
+          <textarea rows="4" id="comment" placeholder="Add a comment..." />
           <button>Send</button>
         </form>
       </section>

@@ -152,7 +152,7 @@ body {
   background-color: var(--color-neutral-300) !important;
   border-radius: 0.5em;
   color: var(--color-primary-700);
-  font-weight: var(--font-weight-500);
+  font-weight: var(--font-weight-600);
   display: grid;
   gap: 0.3em;
   margin: 0 auto;
@@ -160,11 +160,15 @@ body {
   text-align: center;
 }
 
-.comment__score-controls > button {
+.comment__score-button {
   border: 0;
   background-color: transparent;
   color: var(--color-primary-500);
-  font-weight: var(--font-weight-600);
+  font-size: 1.1rem;
+}
+
+.comment__score-button:is(:hover, :focus-visible) {
+  color: var(--color-primary-700);
 }
 
 .comment__header {
@@ -277,6 +281,7 @@ body {
 }
 
 .comment__replies::before {
+  /* decorative element */
   background-color: var(--color-neutral-800);
   border-radius: 10em;
   content: "";
@@ -287,4 +292,51 @@ body {
   position: absolute;
   top: 2.5%;
   width: 2px;
+}
+
+.input {
+  background-color: var(--content-color);
+  border-radius: 1em;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: auto 1fr;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.input__user-img {
+  aspect-ratio: 1;
+  width: 40px;
+}
+
+.input__form {
+  align-content: start;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 1fr auto;
+}
+
+.input__form > textarea {
+  border-color: var(--color-neutral-300);
+  border-radius: 0.5em;
+  resize: none;
+  padding: 0.5em 1em;
+}
+
+.input__form > textarea:focus-visible {
+  outline: 1px solid var(--color-primary-700);
+}
+
+.input__form > button {
+  border: 0;
+  border-radius: 0.5em;
+  margin-bottom: auto;
+  background-color: var(--color-primary-700);
+  color: var(--color-neutral-100);
+  padding: 0.5em 1.66em;
+  text-transform: uppercase;
+}
+
+button:not(.comment__score-button):is(:hover, :focus-visible) {
+  opacity: 0.5;
 }

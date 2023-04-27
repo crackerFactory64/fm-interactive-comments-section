@@ -23,15 +23,24 @@ export default function Comment(props) {
         <div>
           <div className="comment__score-controls-wrapper">
             <div className="comment__score-controls">
-              <button /*onClick={incrementScore}*/>+</button>
+              <button
+                className="comment__score-button" /*onClick={incrementScore}*/
+              >
+                +
+              </button>
               <p>{score}</p>
-              <button /*onClick={decrementScore}*/>-</button>
+              <button
+                className="comment__score-button" /*onClick={incrementScore}*/
+                /*onClick={decrementScore}*/
+              >
+                -
+              </button>
             </div>
           </div>
         </div>
         <div>
           <div className="comment__header">
-            <img className="comment__user-pic" src={userPic} />
+            <img alt={username} className="comment__user-pic" src={userPic} />
             <div className="comment__username-wrapper">
               <span className="comment__username">{username}</span>
               <span className="comment__you-label">you</span>

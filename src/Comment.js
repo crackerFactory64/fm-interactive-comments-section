@@ -37,6 +37,19 @@ export default function Comment(props) {
               </button>
             </div>
           </div>
+          <div className="comment__buttons mobile">
+            <button
+              className="comment__delete-button" /*onClick={deleteComment}*/
+            >
+              Delete
+            </button>
+            <button className="comment__reply-button" /*onClick={addReply}*/>
+              Reply
+            </button>
+            <button className="comment__edit-button" /*onClick={editComment}*/>
+              Edit
+            </button>
+          </div>
         </div>
         <div>
           <div className="comment__header">

@@ -171,6 +171,10 @@ body {
   color: var(--color-primary-700);
 }
 
+.comment__buttons.mobile {
+  display: none;
+}
+
 .comment__header {
   display: grid;
   gap: 1em;
@@ -339,4 +343,68 @@ body {
 
 button:not(.comment__score-button):is(:hover, :focus-visible) {
   opacity: 0.5;
+}
+
+@media (width < 500px) {
+  :root {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    margin-block: 1em;
+    max-width: 370px;
+    width: calc(100% - 1em);
+  }
+
+  .comment {
+    grid-template-columns: unset;
+    padding: 0.5em;
+  }
+
+  .comment > div:first-of-type {
+    display: grid;
+    grid-auto-flow: column;
+    order: 1000;
+  }
+
+  .comment__score-controls {
+    grid-auto-flow: column;
+    margin-inline: 0 auto;
+    padding-inline: 1em;
+  }
+
+  .comment__score-controls > * {
+    margin-block: auto;
+  }
+
+  .comment__buttons.mobile {
+    display: grid;
+  }
+
+  .comment__buttons {
+    display: none;
+  }
+
+  .replies {
+    padding-left: 5%;
+  }
+
+  .input {
+    grid-template-columns: unset;
+    position: relative;
+  }
+
+  .input__user-img {
+    position: absolute;
+    bottom: 0.5em;
+    left: 1em;
+  }
+
+  .input__form {
+    grid-template-columns: unset;
+  }
+
+  .input__form > button {
+    margin-inline-start: auto;
+  }
 }

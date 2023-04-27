@@ -12,6 +12,7 @@ function App() {
     return (
       <Comment
         key={id}
+        currentUser={currentUser.username}
         score={score}
         userPic={user.image.png}
         username={user.username}

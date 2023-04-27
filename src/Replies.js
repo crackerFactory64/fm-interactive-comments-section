@@ -3,12 +3,13 @@ import Comment from "./Comment";
 export default function Replies(props) {
   const repliesElement = [];
 
-  function displayReplies(replies) {
+  function displayReplies(replies, currentUser) {
     for (let i = 0; i < replies.length; i++) {
       const { content, createdAt, id, score, user, replyingTo } = replies[i];
       repliesElement.push(
         <Comment
           key={id}
+          currentUser={props.currentUser}
           score={score}
           userPic={user.image.png}
           username={user.username}
@@ -21,5 +22,7 @@ export default function Replies(props) {
     return repliesElement;
   }
 
-  return <div className="replies">{displayReplies(props.replies)}</div>;
+  return (
+    <div className="comment__replies">{displayReplies(props.replies)}</div>
+  );
 }

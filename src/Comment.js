@@ -14,6 +14,12 @@ export default function Comment(props) {
     replyingTo,
   } = props;
 
+  const [isReplying, setIsReplying] = React.useState(false);
+
+  function toggleReplyInput() {
+    setIsReplying((prevState) => !prevState);
+  }
+
   return (
     <div className="comment-wrapper">
       <article
@@ -44,7 +50,10 @@ export default function Comment(props) {
             >
               Delete
             </button>
-            <button className="comment__reply-button" /*onClick={addReply}*/>
+            <button
+              className="comment__reply-button"
+              onClick={toggleReplyInput}
+            >
               Reply
             </button>
             <button className="comment__edit-button" /*onClick={editComment}*/>
@@ -66,7 +75,10 @@ export default function Comment(props) {
               >
                 Delete
               </button>
-              <button className="comment__reply-button" /*onClick={addReply}*/>
+              <button
+                className="comment__reply-button"
+                onClick={toggleReplyInput}
+              >
                 Reply
               </button>
               <button
@@ -85,7 +97,11 @@ export default function Comment(props) {
         </div>
       </article>
       {replies && <Replies replies={replies} currentUser={currentUser} />}
-      <Input currentUser={currentUser} replyingTo={username} />
+      <Input
+        currentUser={currentUser}
+        replyingTo={username}
+        show={isReplying}
+      />
     </div>
   );
 }

@@ -108,6 +108,7 @@ body {
   display: grid;
   font-family: var(--font-family);
   font-size: var(--font-size);
+  min-height: 100dvh;
   place-content: center;
 }
 
@@ -118,6 +119,8 @@ body {
 }
 
 .container {
+  display: grid;
+  gap: 1em;
   margin-block: 1em;
   margin-inline: auto;
   max-width: 750px;
@@ -274,7 +277,7 @@ body {
   font-weight: var(--font-weight-500);
 }
 
-.replies:empty {
+.comment__replies:empty {
   display: none;
 }
 
@@ -285,7 +288,7 @@ body {
   position: relative;
 }
 
-.comment__replies::before {
+.comment__replies:not(:empty)::before {
   /* decorative element */
   background-color: var(--color-neutral-800);
   border-radius: 10em;
@@ -305,7 +308,6 @@ body {
   display: grid;
   gap: 1em;
   grid-template-columns: auto 1fr;
-  margin-top: 1em;
   padding: 1em;
 }
 

@@ -10,6 +10,7 @@ export default function Input(props) {
       inputRef.current.scrollIntoView();
     }
   }, 50);
+
   return (
     <section
       className={replyingTo ? "input reply" : "input"}

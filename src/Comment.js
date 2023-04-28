@@ -15,9 +15,24 @@ export default function Comment(props) {
   } = props;
 
   const [isReplying, setIsReplying] = React.useState(false);
+  const [currentScore, setCurrentScore] = React.useState(score);
+  const [buttonState, setButtonState] = React.useState({
+    plus: false,
+    minus: false,
+  });
 
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
+  }
+
+  function incrementScore(e) {
+    setCurrentScore((prevState) => prevState + 1);
+    setButtonState({ ...buttonState, plus: !buttonState.plus, minus: false });
+  }
+
+  function decrementScore(e) {
+    setCurrentScore((prevState) => prevState - 1);
+    setButtonState({ ...buttonState, plus: false, minus: !buttonState.minus });
   }
 
   return (
@@ -31,14 +46,17 @@ export default function Comment(props) {
           <div className="comment__score-controls-wrapper">
             <div className="comment__score-controls">
               <button
-                className="comment__score-button" /*onClick={incrementScore}*/
+                className="comment__score-button"
+                onClick={(e) => incrementScore(e)}
+                disabled={buttonState.plus}
               >
                 +
               </button>
-              <p>{score}</p>
+              <p>{currentScore}</p>
               <button
-                className="comment__score-button" /*onClick={incrementScore}*/
-                /*onClick={decrementScore}*/
+                className="comment__score-button"
+                onClick={(e) => decrementScore(e)}
+                disabled={buttonState.minus}
               >
                 -
               </button>

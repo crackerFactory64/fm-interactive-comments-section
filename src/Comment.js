@@ -21,6 +21,8 @@ export default function Comment(props) {
     minus: false,
   });
 
+  const dialogRef = React.useRef(null);
+
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
   }
@@ -33,6 +35,10 @@ export default function Comment(props) {
   function decrementScore(e) {
     setCurrentScore((prevState) => prevState - 1);
     setButtonState({ ...buttonState, plus: false, minus: !buttonState.minus });
+  }
+
+  function deleteComment() {
+    dialogRef.current.showModal();
   }
 
   return (
@@ -63,9 +69,7 @@ export default function Comment(props) {
             </div>
           </div>
           <div className="comment__buttons mobile">
-            <button
-              className="comment__delete-button" /*onClick={deleteComment}*/
-            >
+            <button className="comment__delete-button" onClick={deleteComment}>
               Delete
             </button>
             <button
@@ -89,7 +93,8 @@ export default function Comment(props) {
             <span className="comment_time-added">{timeAdded}</span>
             <div className="comment__buttons">
               <button
-                className="comment__delete-button" /*onClick={deleteComment}*/
+                className="comment__delete-button"
+                onClick={deleteComment}
               >
                 Delete
               </button>
@@ -120,6 +125,26 @@ export default function Comment(props) {
         replyingTo={username}
         show={isReplying}
       />
+
+      <dialog className="comment__delete-dialog" ref={dialogRef}>
+        <h2>Delete comment</h2>
+        <p>
+          Are you sure you want to delete this comment? This will remove the
+          comment and can't be undone.
+        </p>
+        <div>
+          <button
+            onClick={() => {
+              document
+                .querySelectorAll(".comment__delete-dialog")
+                .forEach((modal) => modal.close());
+            }}
+          >
+            No, cancel
+          </button>
+          <button>Yes, delete</button>
+        </div>
+      </dialog>
     </div>
   );
 }

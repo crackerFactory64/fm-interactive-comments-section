@@ -112,6 +112,10 @@ body {
   place-content: center;
 }
 
+body:has(.comment__delete-dialog[open]) {
+  overflow: hidden;
+}
+
 .hidden {
   position: absolute;
   top: -1000em;
@@ -300,6 +304,49 @@ body {
   position: absolute;
   top: 2.5%;
   width: 2px;
+}
+
+.comment__delete-dialog[open] {
+  background-color: var(--content-color);
+  border-radius: 1em;
+  border: 0;
+  color: var(--color-neutral-800);
+  display: grid;
+  gap: 1em;
+  inset: 0;
+  max-width: 400px;
+  padding: 2em;
+  position: fixed;
+  width: calc(100% - 2em);
+}
+
+.comment__delete-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.comment__delete-dialog > h2 {
+  color: var(--color-neutral-900);
+}
+
+.comment__delete-dialog > div {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1em;
+}
+
+.comment__delete-dialog button {
+  background-color: var(--color-primary-600);
+  border-radius: 0.5em;
+  border: 0;
+  color: var(--color-neutral-200);
+  font-weight: var(--font-weight-500);
+  letter-spacing: 0.5px;
+  padding-block: 1em;
+  text-transform: uppercase;
+}
+
+.comment__delete-dialog button:first-of-type {
+  background-color: var(--color-neutral-800);
 }
 
 .input {

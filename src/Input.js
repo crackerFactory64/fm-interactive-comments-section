@@ -30,7 +30,7 @@ export default function Input(props) {
           ref={inputRef}
           rows="4"
           id="comment"
-          placeholder="Add a comment..."
+          placeholder={replyingTo ? `@${replyingTo}` : "Add a comment..."}
         />
         <button>{replyingTo ? "Reply" : "Send"}</button>
       </form>

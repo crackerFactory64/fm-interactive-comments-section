@@ -118,6 +118,7 @@ body {
 }
 
 .container {
+  margin-block: 1em;
   margin-inline: auto;
   max-width: 750px;
   width: calc(100% - 3em);
@@ -308,6 +309,10 @@ body {
   padding: 1em;
 }
 
+.input.reply {
+  display: none;
+}
+
 .input__user-img {
   aspect-ratio: 1;
   width: 40px;
@@ -351,14 +356,13 @@ button:not(.comment__score-button):is(:hover, :focus-visible) {
   }
 
   .container {
-    margin-block: 1em;
     max-width: 370px;
     width: calc(100% - 1em);
   }
 
   .comment {
     grid-template-columns: unset;
-    padding: 0.5em;
+    padding: 1em;
   }
 
   .comment > div:first-of-type {
@@ -385,6 +389,10 @@ button:not(.comment__score-button):is(:hover, :focus-visible) {
     display: none;
   }
 
+  .comment__user-pic {
+    width: 30px;
+  }
+
   .replies {
     padding-left: 5%;
   }
@@ -396,8 +404,9 @@ button:not(.comment__score-button):is(:hover, :focus-visible) {
 
   .input__user-img {
     position: absolute;
-    bottom: 0.5em;
+    bottom: 1em;
     left: 1em;
+    width: 30px;
   }
 
   .input__form {

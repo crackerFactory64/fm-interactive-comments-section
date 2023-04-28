@@ -1,5 +1,6 @@
 import React from "react";
 import Replies from "./Replies";
+import Input from "./Input";
 
 export default function Comment(props) {
   const {
@@ -17,7 +18,7 @@ export default function Comment(props) {
     <div className="comment-wrapper">
       <article
         className={
-          currentUser === username ? "comment user-comment" : "comment"
+          currentUser.username === username ? "comment user-comment" : "comment"
         }
       >
         <div>
@@ -84,6 +85,7 @@ export default function Comment(props) {
         </div>
       </article>
       {replies && <Replies replies={replies} currentUser={currentUser} />}
+      <Input currentUser={currentUser} replyingTo={username} />
     </div>
   );
 }

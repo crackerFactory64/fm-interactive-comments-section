@@ -1,6 +1,7 @@
 import React from "react";
 import data from "./data.json";
 import Comment from "./Comment";
+import Input from "./Input";
 
 function App() {
   const currentUser = data.currentUser;
@@ -12,7 +13,7 @@ function App() {
     return (
       <Comment
         key={id}
-        currentUser={currentUser.username}
+        currentUser={currentUser}
         score={score}
         userPic={user.image.png}
         username={user.username}
@@ -26,20 +27,7 @@ function App() {
   return (
     <>
       <section className="comments">{commentsElements}</section>
-      <section className="input">
-        <img
-          alt={currentUser.username}
-          className="input__user-img"
-          src={currentUser.image.png}
-        />
-        <form className="input__form">
-          <label htmlFor="comment" className="hidden">
-            Enter a new comment
-          </label>
-          <textarea rows="4" id="comment" placeholder="Add a comment..." />
-          <button>Send</button>
-        </form>
-      </section>
+      <Input currentUser={currentUser} />
     </>
   );
 }

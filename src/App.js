@@ -5,21 +5,37 @@ import Input from "./Input";
 
 function App() {
   const currentUser = data.currentUser;
-  const comments = data.comments;
+  const [comments, setComments] = React.useState(data.comments);
+
+  function addNewComment(content) {
+    const newComment = {
+      content: content,
+      createdAt: "Just now",
+      id: comments.length + 1,
+      replies: [],
+      score: 0,
+      user: {
+        image: { png: currentUser.image.png, webp: currentUser.image.webp },
+        username: currentUser.username,
+      },
+    };
+
+    setComments((prevState) => [...prevState, newComment]);
+  }
 
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, score, user } = comment;
 
     return (
       <Comment
-        key={id}
-        currentUser={currentUser}
-        score={score}
-        userPic={user.image.png}
-        username={user.username}
-        timeAdded={createdAt}
         content={content}
+        currentUser={currentUser}
+        key={id}
         replies={replies}
+        score={score}
+        timeAdded={createdAt}
+        username={user.username}
+        userPic={user.image.png}
       />
     );
   });
@@ -27,7 +43,7 @@ function App() {
   return (
     <>
       <section className="comments">{commentsElements}</section>
-      <Input currentUser={currentUser} />
+      <Input currentUser={currentUser} addNewComment={addNewComment} />
     </>
   );
 }

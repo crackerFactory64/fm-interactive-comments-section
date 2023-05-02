@@ -1,7 +1,7 @@
 import React from "react";
 export default function Input(props) {
-  const { currentUser, replyingTo, show } = props;
-
+  const { currentUser, replyingTo, show, addNewComment } = props;
+  const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef(null);
 
   setTimeout(() => {
@@ -10,6 +10,10 @@ export default function Input(props) {
       inputRef.current.scrollIntoView();
     }
   }, 50);
+
+  function handleChange(e) {
+    setInputValue(e.target.value);
+  }
 
   return (
     <section
@@ -27,12 +31,21 @@ export default function Input(props) {
           Enter a new comment
         </label>
         <textarea
-          ref={inputRef}
-          rows="4"
           id="comment"
+          onChange={handleChange}
           placeholder={replyingTo ? `@${replyingTo}` : "Add a comment..."}
+          ref={replyingTo && inputRef}
+          rows="4"
+          value={inputValue}
         />
-        <button>{replyingTo ? "Reply" : "Send"}</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addNewComment(inputValue);
+          }}
+        >
+          {replyingTo ? "Reply" : "Send"}
+        </button>
       </form>
     </section>
   );

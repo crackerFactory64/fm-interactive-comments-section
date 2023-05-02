@@ -51,7 +51,11 @@ function App() {
   return (
     <>
       <section className="comments">{commentsElements}</section>
-      <Input currentUser={currentUser} addNewComment={addNewComment} />
+      <Input
+        currentUser={currentUser}
+        className="input main"
+        addNewComment={addNewComment}
+      />
     </>
   );
 }

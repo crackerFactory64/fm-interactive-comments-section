@@ -17,16 +17,37 @@ export default function Comment(props) {
   } = props;
 
   const [isReplying, setIsReplying] = React.useState(false);
+  const [isEditing, setIsEditing] = React.useState(false);
   const [currentScore, setCurrentScore] = React.useState(score);
   const [buttonState, setButtonState] = React.useState({
     plus: false,
     minus: false,
   });
 
+  const [savedContent, setSavedContent] = React.useState(content);
+  const [inputValue, setinputValue] = React.useState(savedContent);
+
   const dialogRef = React.useRef(null);
+  const editRef = React.useRef(null);
 
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
+  }
+
+  function toggleEditInput(e) {
+    setIsEditing((prevState) => !prevState);
+    if (isEditing && e.target.className === "comment__edit-button") {
+      //if the editing form is closed by pressing the edit button for a second time revert the input value to the previously saved content...
+      setinputValue(savedContent);
+    } else {
+      //...and if not, it must have been closed via the update button so save the changes
+      setSavedContent(inputValue);
+    }
+    setTimeout(() => editRef.current.focus(), 50);
+  }
+
+  function handleChange(e) {
+    setinputValue(e.target.value);
   }
 
   function incrementScore(e) {
@@ -45,6 +66,7 @@ export default function Comment(props) {
         className={
           currentUser.username === username ? "comment user-comment" : "comment"
         }
+        data-editing={isEditing}
       >
         <div>
           <div className="comment__score-controls-wrapper">
@@ -81,7 +103,7 @@ export default function Comment(props) {
             >
               Reply
             </button>
-            <button className="comment__edit-button" /*onClick={editComment}*/>
+            <button className="comment__edit-button" onClick={toggleEditInput}>
               Edit
             </button>
           </div>
@@ -110,7 +132,8 @@ export default function Comment(props) {
                 Reply
               </button>
               <button
-                className="comment__edit-button" /*onClick={editComment}*/
+                className="comment__edit-button"
+                onClick={toggleEditInput}
               >
                 Edit
               </button>
@@ -120,12 +143,40 @@ export default function Comment(props) {
             <span className="comment__addressee">
               {replyingTo && `@${replyingTo} `}
             </span>
-            {content}
+            {savedContent}
           </p>
+          <div className="comment__edit-wrapper">
+            <form className="comment__edit-form">
+              <label className="hidden" htmlFor="edit-comment">
+                Edit your comment
+              </label>
+              <textarea
+                ref={editRef}
+                id="edit-comment"
+                onChange={(e) => handleChange(e)}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  toggleEditInput(e);
+                }}
+                rows={4}
+                value={inputValue}
+              ></textarea>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleEditInput(e);
+                }}
+              >
+                Update
+              </button>
+            </form>
+          </div>
         </div>
       </article>
       {replies && <Replies currentUser={currentUser} replies={replies} />}
+
       <Input
+        className=""
         currentUser={currentUser}
         replyingTo={username}
         show={isReplying}

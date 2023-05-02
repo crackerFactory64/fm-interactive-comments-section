@@ -1,6 +1,7 @@
 import React from "react";
 export default function Input(props) {
-  const { currentUser, replyingTo, show, addNewComment } = props;
+  const { addNewComment, className, currentUser, editing, replyingTo, show } =
+    props;
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef(null);
 
@@ -16,8 +17,8 @@ export default function Input(props) {
   }
 
   return (
-    <section
-      className={replyingTo ? "input reply" : "input"}
+    <div
+      className={className ? className : "input"}
       style={{ display: show && "grid" }}
     >
       <img
@@ -48,6 +49,6 @@ export default function Input(props) {
           {replyingTo ? "Reply" : "Send"}
         </button>
       </form>
-    </section>
+    </div>
   );
 }

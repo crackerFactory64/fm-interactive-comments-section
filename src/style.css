@@ -276,9 +276,33 @@ body:has(.comment__delete-dialog[open]) {
   margin-top: 0.5em;
 }
 
+.comment[data-editing="true"] .comment__content {
+  display: none;
+}
+
 .comment__addressee {
   color: var(--color-primary-700);
   font-weight: var(--font-weight-500);
+}
+
+.comment__edit-wrapper {
+  display: none;
+  margin-top: 1em;
+}
+
+.comment[data-editing="true"] .comment__edit-wrapper {
+  display: block;
+}
+
+.comment__edit-form {
+  display: grid;
+  gap: 1em;
+}
+
+.comment__edit-form > button {
+  margin-inline-start: auto;
+  width: fit-content;
+  width: -moz-fit-content;
 }
 
 .comment__replies:empty {
@@ -352,14 +376,14 @@ body:has(.comment__delete-dialog[open]) {
 .input {
   background-color: var(--content-color);
   border-radius: 1em;
-  display: grid;
+  display: none;
   gap: 1em;
   grid-template-columns: auto 1fr;
   padding: 1em;
 }
 
-.input.reply {
-  display: none;
+.input.main {
+  display: grid;
 }
 
 .input__user-img {
@@ -374,18 +398,18 @@ body:has(.comment__delete-dialog[open]) {
   grid-template-columns: 1fr auto;
 }
 
-.input__form > textarea {
+textarea {
   border-color: var(--color-neutral-300);
   border-radius: 0.5em;
   resize: none;
   padding: 0.5em 1em;
 }
 
-.input__form > textarea:focus-visible {
+textarea:focus-visible {
   outline: 1px solid var(--color-primary-700);
 }
 
-.input__form > button {
+form > button {
   border: 0;
   border-radius: 0.5em;
   margin-bottom: auto;

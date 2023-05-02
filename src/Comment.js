@@ -4,14 +4,16 @@ import Input from "./Input";
 
 export default function Comment(props) {
   const {
-    score,
-    userPic,
-    currentUser,
-    username,
-    timeAdded,
     content,
+    currentUser,
+    deleteComment,
+    id,
     replies,
     replyingTo,
+    score,
+    timeAdded,
+    username,
+    userPic,
   } = props;
 
   const [isReplying, setIsReplying] = React.useState(false);
@@ -35,10 +37,6 @@ export default function Comment(props) {
   function decrementScore(e) {
     setCurrentScore((prevState) => prevState - 1);
     setButtonState({ ...buttonState, plus: false, minus: !buttonState.minus });
-  }
-
-  function deleteComment() {
-    dialogRef.current.showModal();
   }
 
   return (
@@ -69,7 +67,12 @@ export default function Comment(props) {
             </div>
           </div>
           <div className="comment__buttons mobile">
-            <button className="comment__delete-button" onClick={deleteComment}>
+            <button
+              className="comment__delete-button"
+              onClick={() => {
+                dialogRef.current.showModal();
+              }}
+            >
               Delete
             </button>
             <button
@@ -94,7 +97,9 @@ export default function Comment(props) {
             <div className="comment__buttons">
               <button
                 className="comment__delete-button"
-                onClick={deleteComment}
+                onClick={() => {
+                  dialogRef.current.showModal();
+                }}
               >
                 Delete
               </button>
@@ -119,7 +124,7 @@ export default function Comment(props) {
           </p>
         </div>
       </article>
-      {replies && <Replies replies={replies} currentUser={currentUser} />}
+      {replies && <Replies currentUser={currentUser} replies={replies} />}
       <Input
         currentUser={currentUser}
         replyingTo={username}
@@ -142,7 +147,7 @@ export default function Comment(props) {
           >
             No, cancel
           </button>
-          <button>Yes, delete</button>
+          <button onClick={() => deleteComment(id)}>Yes, delete</button>
         </div>
       </dialog>
     </div>

@@ -23,6 +23,12 @@ function App() {
     setComments((prevState) => [...prevState, newComment]);
   }
 
+  function deleteComment(commentToDelete) {
+    setComments((prevState) => {
+      return prevState.filter((comment) => comment.id !== commentToDelete);
+    });
+  }
+
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, score, user } = comment;
 
@@ -30,6 +36,8 @@ function App() {
       <Comment
         content={content}
         currentUser={currentUser}
+        deleteComment={deleteComment}
+        id={id}
         key={id}
         replies={replies}
         score={score}

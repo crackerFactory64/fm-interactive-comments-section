@@ -42,6 +42,7 @@ export default function Input(props) {
           onClick={(e) => {
             e.preventDefault();
             addNewComment(inputValue);
+            setInputValue("");
           }}
         >
           {replyingTo ? "Reply" : "Send"}

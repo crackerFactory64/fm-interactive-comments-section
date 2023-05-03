@@ -4,6 +4,7 @@ import Input from "./Input";
 
 export default function Comment(props) {
   const {
+    comments,
     content,
     currentUser,
     deleteComment,
@@ -16,22 +17,64 @@ export default function Comment(props) {
     userPic,
   } = props;
 
+  const parentComment = findParentComment();
+  const parentCommentReplies = parentComment ? parentComment.replies : [];
+
+  const [savedReplies, setSavedReplies] = React.useState(replies);
+  const [savedParentCommentReplies, setSavedParentCommentReplies] =
+    React.useState(parentCommentReplies);
+  const [savedContent, setSavedContent] = React.useState(content);
+  const [inputValue, setinputValue] = React.useState(savedContent);
+
   const [isReplying, setIsReplying] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
   const [currentScore, setCurrentScore] = React.useState(score);
   const [buttonState, setButtonState] = React.useState({
-    plus: false,
-    minus: false,
+    plusDisabled: false,
+    minusDisabled: false,
   });
-
-  const [savedContent, setSavedContent] = React.useState(content);
-  const [inputValue, setinputValue] = React.useState(savedContent);
 
   const dialogRef = React.useRef(null);
   const editRef = React.useRef(null);
 
+  function findParentComment() {
+    let result;
+
+    if (replyingTo) {
+      comments.forEach((comment) => {
+        if (comment.replies.filter((reply) => reply.id === id).length > 0) {
+          result = comment;
+        }
+      });
+    } else {
+      result = null;
+    }
+
+    return result;
+  }
+
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
+  }
+
+  function addNewReply(content) {
+    const newReply = {
+      content: content,
+      createdAt: "Just now",
+      id: Math.floor(Math.random() * 50000),
+      replies: [],
+      score: 0,
+      user: {
+        image: { png: currentUser.image.png, webp: currentUser.image.webp },
+        username: currentUser.username,
+      },
+    };
+
+    if (savedParentCommentReplies.length) {
+      setSavedParentCommentReplies([...savedParentCommentReplies, newReply]);
+    } else {
+      setSavedReplies([...savedReplies, newReply]);
+    }
   }
 
   function toggleEditInput(e) {
@@ -52,12 +95,20 @@ export default function Comment(props) {
 
   function incrementScore(e) {
     setCurrentScore((prevState) => prevState + 1);
-    setButtonState({ ...buttonState, plus: !buttonState.plus, minus: false });
+    setButtonState({
+      ...buttonState,
+      plusDisabled: !buttonState.plus,
+      minusDisabled: false,
+    });
   }
 
   function decrementScore(e) {
     setCurrentScore((prevState) => prevState - 1);
-    setButtonState({ ...buttonState, plus: false, minus: !buttonState.minus });
+    setButtonState({
+      ...buttonState,
+      plusDisabled: false,
+      minusDisabled: !buttonState.minus,
+    });
   }
 
   return (
@@ -74,7 +125,7 @@ export default function Comment(props) {
               <button
                 className="comment__score-button"
                 onClick={(e) => incrementScore(e)}
-                disabled={buttonState.plus}
+                disabled={buttonState.plusDisabled}
               >
                 +
               </button>
@@ -82,7 +133,7 @@ export default function Comment(props) {
               <button
                 className="comment__score-button"
                 onClick={(e) => decrementScore(e)}
-                disabled={buttonState.minus}
+                disabled={buttonState.minusDisabled}
               >
                 -
               </button>
@@ -173,15 +224,26 @@ export default function Comment(props) {
           </div>
         </div>
       </article>
-      {replies && <Replies currentUser={currentUser} replies={replies} />}
 
-      <Input
-        className=""
-        currentUser={currentUser}
-        replyingTo={username}
-        show={isReplying}
-      />
+      {savedReplies && (
+        <Replies
+          comments={comments}
+          currentUser={currentUser}
+          deleteComment={deleteComment}
+          replies={savedReplies}
+        />
+      )}
 
+      <div className="comment__reply-wrapper">
+        <Input
+          addNewReply={addNewReply}
+          className=""
+          currentUser={currentUser}
+          id={id}
+          replyingTo={username}
+          show={isReplying}
+        />
+      </div>
       <dialog className="comment__delete-dialog" ref={dialogRef}>
         <h2>Delete comment</h2>
         <p>

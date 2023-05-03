@@ -30,15 +30,18 @@ function App() {
   }
 
   const commentsElements = comments.map((comment) => {
-    const { content, createdAt, id, replies, score, user } = comment;
+    const { content, createdAt, id, replies, replyingTo, score, user } =
+      comment;
 
     return (
       <Comment
+        comments={comments}
         content={content}
         currentUser={currentUser}
         deleteComment={deleteComment}
         id={id}
         key={id}
+        replyingTo={replyingTo}
         replies={replies}
         score={score}
         timeAdded={createdAt}

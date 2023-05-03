@@ -1,7 +1,13 @@
 import React from "react";
 export default function Input(props) {
-  const { addNewComment, className, currentUser, editing, replyingTo, show } =
-    props;
+  const {
+    addNewComment,
+    addNewReply,
+    className,
+    currentUser,
+    replyingTo,
+    show,
+  } = props;
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef(null);
 
@@ -16,6 +22,12 @@ export default function Input(props) {
     setInputValue(e.target.value);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    replyingTo ? addNewReply(inputValue) : addNewComment(inputValue);
+    setInputValue("");
+  }
+
   return (
     <div
       className={className ? className : "input"}
@@ -27,7 +39,7 @@ export default function Input(props) {
         src={currentUser.image.png}
       />
 
-      <form className="input__form">
+      <form className="input__form" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="comment" className="hidden">
           Enter a new comment
         </label>
@@ -39,15 +51,7 @@ export default function Input(props) {
           rows="4"
           value={inputValue}
         />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            addNewComment(inputValue);
-            setInputValue("");
-          }}
-        >
-          {replyingTo ? "Reply" : "Send"}
-        </button>
+        <button>{replyingTo ? "Reply" : "Send"}</button>
       </form>
     </div>
   );

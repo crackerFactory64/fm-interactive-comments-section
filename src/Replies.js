@@ -8,7 +8,6 @@ export default function Replies(props) {
 
     if (replies) {
       for (let i = 0; i < replies.length; i++) {
-        console.log(replies[i]);
         const { content, createdAt, id, score, user, replyingTo } = replies[i];
 
         repliesElement.push(

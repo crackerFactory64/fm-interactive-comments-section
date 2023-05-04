@@ -1,9 +1,11 @@
 import React from "react";
 import Replies from "./Replies";
+import Reply from "./Reply";
 import Input from "./Input";
 
 export default function Comment(props) {
   const {
+    addNewReply,
     comments,
     content,
     currentUser,
@@ -17,12 +19,6 @@ export default function Comment(props) {
     userPic,
   } = props;
 
-  const parentComment = findParentComment();
-  const parentCommentReplies = parentComment ? parentComment.replies : [];
-
-  const [savedReplies, setSavedReplies] = React.useState(replies);
-  const [savedParentCommentReplies, setSavedParentCommentReplies] =
-    React.useState(parentCommentReplies);
   const [savedContent, setSavedContent] = React.useState(content);
   const [inputValue, setinputValue] = React.useState(savedContent);
 
@@ -37,44 +33,27 @@ export default function Comment(props) {
   const dialogRef = React.useRef(null);
   const editRef = React.useRef(null);
 
-  function findParentComment() {
+  function findParentComment(parentId) {
     let result;
 
-    if (replyingTo) {
-      comments.forEach((comment) => {
-        if (comment.replies.filter((reply) => reply.id === id).length > 0) {
-          result = comment;
-        }
-      });
-    } else {
-      result = null;
-    }
+    comments.forEach((comment) => {
+      if (comment.id === parentId) {
+        result = comment;
+      } else if (comment.replies) {
+        comment.replies.forEach((reply) => {
+          if (reply.id === parentId) {
+            console.log(reply.id, parentId);
+            result = comment;
+          }
+        });
+      }
+    });
 
     return result;
   }
 
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
-  }
-
-  function addNewReply(content) {
-    const newReply = {
-      content: content,
-      createdAt: "Just now",
-      id: Math.floor(Math.random() * 50000),
-      replies: [],
-      score: 0,
-      user: {
-        image: { png: currentUser.image.png, webp: currentUser.image.webp },
-        username: currentUser.username,
-      },
-    };
-
-    if (savedParentCommentReplies.length) {
-      setSavedParentCommentReplies([...savedParentCommentReplies, newReply]);
-    } else {
-      setSavedReplies([...savedReplies, newReply]);
-    }
   }
 
   function toggleEditInput(e) {
@@ -225,13 +204,25 @@ export default function Comment(props) {
         </div>
       </article>
 
-      {savedReplies && (
-        <Replies
-          comments={comments}
-          currentUser={currentUser}
-          deleteComment={deleteComment}
-          replies={savedReplies}
-        />
+      {replies && (
+        <div className="comment__replies">
+          {replies.map((reply) => (
+            <Reply
+              addNewReply={addNewReply}
+              content={reply.content}
+              comments={comments}
+              createdAt={reply.createdAt}
+              currentUser={currentUser}
+              deleteComment={deleteComment}
+              id={reply.id}
+              key={reply.id}
+              parentComment={id}
+              replyingTo={reply.replyingTo}
+              score={reply.score}
+              user={reply.user}
+            />
+          ))}
+        </div>
       )}
 
       <div className="comment__reply-wrapper">
@@ -239,7 +230,7 @@ export default function Comment(props) {
           addNewReply={addNewReply}
           className=""
           currentUser={currentUser}
-          id={id}
+          parentId={findParentComment() ? findParentComment() : id}
           replyingTo={username}
           show={isReplying}
         />

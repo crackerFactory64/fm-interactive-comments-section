@@ -5,6 +5,7 @@ export default function Input(props) {
     addNewReply,
     className,
     currentUser,
+    parentId,
     replyingTo,
     show,
   } = props;
@@ -24,7 +25,7 @@ export default function Input(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    replyingTo ? addNewReply(inputValue) : addNewComment(inputValue);
+    replyingTo ? addNewReply(inputValue, parentId) : addNewComment(inputValue);
     setInputValue("");
   }
 

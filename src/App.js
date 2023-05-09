@@ -97,7 +97,7 @@ function App() {
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, replyingTo, score, user } =
       comment;
-
+    console.log(comment);
     return (
       <Comment
         addNewReply={addNewReply}

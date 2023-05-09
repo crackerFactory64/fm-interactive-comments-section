@@ -1,5 +1,4 @@
 import React from "react";
-import Replies from "./Replies";
 import Reply from "./Reply";
 import Input from "./Input";
 

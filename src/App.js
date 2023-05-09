@@ -11,7 +11,7 @@ function App() {
     const newComment = {
       content: content,
       createdAt: "Just now",
-      id: Math.floor(Math.random * 50000),
+      id: Math.floor(Math.random() * 50000),
       replies: [],
       score: 0,
       user: {
@@ -29,12 +29,13 @@ function App() {
     });
   }
 
-  function addNewReply(content, parentId) {
+  function addNewReply(content, id, replyingTo) {
     const newReply = {
       content: content,
       createdAt: "Just now",
       id: Math.floor(Math.random() * 50000),
       replies: [],
+      replyingTo: replyingTo,
       score: 0,
       user: {
         image: { png: currentUser.image.png, webp: currentUser.image.webp },
@@ -45,11 +46,11 @@ function App() {
     let targetComment;
 
     comments.forEach((comment) => {
-      if (comment.id === parentId) {
+      if (comment.id === id) {
         targetComment = comment;
       } else {
         comment.replies.forEach((reply) => {
-          if (reply.id === parentId) {
+          if (reply.id === id) {
             targetComment = comment;
           }
         });
@@ -63,11 +64,32 @@ function App() {
       (comment) => comment === targetComment
     )[0];
     targetCommentCopy.replies = [...targetCommentCopy.replies, newReply];
+
+    setComments(commentsCopy.slice()); //slice forces a re-render for some reason
+  }
+
+  function deleteReply(comments, id) {
+    let targetComment;
+
     comments.forEach((comment) => {
-      if (comment.id === parentId) {
-        comment = targetCommentCopy;
+      if (comment.id === id) {
+        targetComment = comment;
+      } else {
+        comment.replies.forEach((reply) => {
+          if (reply.id === id) {
+            targetComment = comment;
+          }
+        });
       }
     });
+
+    const commentsCopy = comments;
+    const targetCommentCopy = commentsCopy.filter(
+      (comment) => comment === targetComment
+    )[0];
+    targetCommentCopy.replies = targetCommentCopy.replies.filter(
+      (reply) => reply.id !== id
+    );
 
     setComments(commentsCopy.slice()); //slice forces a re-render for some reason
   }
@@ -83,6 +105,7 @@ function App() {
         content={content}
         currentUser={currentUser}
         deleteComment={deleteComment}
+        deleteReply={deleteReply}
         id={id}
         key={id}
         replyingTo={replyingTo}

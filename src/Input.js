@@ -12,6 +12,7 @@ export default function Input(props) {
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef(null);
 
+  console.log(inputRef);
   setTimeout(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -25,7 +26,9 @@ export default function Input(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    replyingTo ? addNewReply(inputValue, parentId) : addNewComment(inputValue);
+    replyingTo
+      ? addNewReply(inputValue, parentId, replyingTo)
+      : addNewComment(inputValue);
     setInputValue("");
   }
 

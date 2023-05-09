@@ -10,6 +10,7 @@ export default function Comment(props) {
     content,
     currentUser,
     deleteComment,
+    deleteReply,
     id,
     replies,
     replyingTo,
@@ -32,25 +33,6 @@ export default function Comment(props) {
 
   const dialogRef = React.useRef(null);
   const editRef = React.useRef(null);
-
-  function findParentComment(parentId) {
-    let result;
-
-    comments.forEach((comment) => {
-      if (comment.id === parentId) {
-        result = comment;
-      } else if (comment.replies) {
-        comment.replies.forEach((reply) => {
-          if (reply.id === parentId) {
-            console.log(reply.id, parentId);
-            result = comment;
-          }
-        });
-      }
-    });
-
-    return result;
-  }
 
   function toggleReplyInput() {
     setIsReplying((prevState) => !prevState);
@@ -213,7 +195,7 @@ export default function Comment(props) {
               comments={comments}
               createdAt={reply.createdAt}
               currentUser={currentUser}
-              deleteComment={deleteComment}
+              deleteComment={deleteReply}
               id={reply.id}
               key={reply.id}
               parentComment={id}
@@ -230,7 +212,7 @@ export default function Comment(props) {
           addNewReply={addNewReply}
           className=""
           currentUser={currentUser}
-          parentId={findParentComment() ? findParentComment() : id}
+          parentId={id}
           replyingTo={username}
           show={isReplying}
         />
@@ -251,7 +233,9 @@ export default function Comment(props) {
           >
             No, cancel
           </button>
-          <button onClick={() => deleteComment(id)}>Yes, delete</button>
+          <button onClick={() => deleteComment(comments, id)}>
+            Yes, delete
+          </button>
         </div>
       </dialog>
     </div>

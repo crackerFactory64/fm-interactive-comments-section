@@ -215,6 +215,7 @@ export default function Comment(props) {
           parentId={id}
           replyingTo={username}
           show={isReplying}
+          toggleReplyInput={toggleReplyInput}
         />
       </div>
       <dialog className="comment__delete-dialog" ref={dialogRef}>

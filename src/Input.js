@@ -8,11 +8,11 @@ export default function Input(props) {
     parentId,
     replyingTo,
     show,
+    toggleReplyInput,
   } = props;
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef(null);
 
-  console.log(inputRef);
   setTimeout(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -26,9 +26,13 @@ export default function Input(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    replyingTo
-      ? addNewReply(inputValue, parentId, replyingTo)
-      : addNewComment(inputValue);
+    if (replyingTo) {
+      addNewReply(inputValue, parentId, replyingTo);
+      toggleReplyInput();
+      window.scrollTo(0, window.scrollY * 0.9);
+    } else {
+      addNewComment(inputValue);
+    }
     setInputValue("");
   }
 

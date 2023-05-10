@@ -94,12 +94,35 @@ function App() {
     setComments(commentsCopy.slice()); //slice forces a re-render for some reason
   }
 
+  function changeScore(isUpVote, commentId) {
+    if (isUpVote) {
+      setComments((prevState) =>
+        prevState.map((comment) =>
+          comment.id === commentId
+            ? { ...comment, score: comment.score + 1 }
+            : comment
+        )
+      );
+    } else {
+      setComments((prevState) =>
+        prevState.map((comment) =>
+          comment.id === commentId
+            ? { ...comment, score: comment.score - 1 }
+            : comment
+        )
+      );
+    }
+
+    console.log(comments);
+  }
+
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, replyingTo, score, user } =
       comment;
     return (
       <Comment
         addNewReply={addNewReply}
+        changeScore={changeScore}
         comments={comments}
         content={content}
         currentUser={currentUser}

@@ -30,6 +30,8 @@ export default function Comment(props) {
     minusDisabled: false,
   });
 
+  const initialScore = score;
+
   const dialogRef = React.useRef(null);
   const editRef = React.useRef(null);
 
@@ -55,19 +57,22 @@ export default function Comment(props) {
 
   function incrementScore(e) {
     setCurrentScore((prevState) => prevState + 1);
+    console.log(initialScore, currentScore);
     setButtonState({
       ...buttonState,
-      plusDisabled: !buttonState.plus,
+      plusDisabled: currentScore === initialScore ? true : false,
       minusDisabled: false,
     });
   }
 
   function decrementScore(e) {
     setCurrentScore((prevState) => prevState - 1);
+    console.log(initialScore);
+
     setButtonState({
       ...buttonState,
       plusDisabled: false,
-      minusDisabled: !buttonState.minus,
+      minusDisabled: currentScore === initialScore ? true : false,
     });
   }
 

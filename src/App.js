@@ -94,26 +94,42 @@ function App() {
     setComments(commentsCopy.slice()); //slice forces a re-render for some reason
   }
 
-  function changeScore(isUpVote, commentId) {
-    if (isUpVote) {
+  function changeScore(isUpvote, commentId, parentCommentId) {
+    if (!parentCommentId) {
       setComments((prevState) =>
         prevState.map((comment) =>
           comment.id === commentId
-            ? { ...comment, score: comment.score + 1 }
+            ? {
+                ...comment,
+                score: isUpvote ? comment.score + 1 : comment.score - 1,
+              }
             : comment
         )
       );
     } else {
+      const parentCommentCopy = comments.filter(
+        (comment) => comment.id === parentCommentId
+      )[0];
+
+      const newReplies = parentCommentCopy.replies.map((reply) =>
+        reply.id === commentId
+          ? { ...reply, score: isUpvote ? reply.score + 1 : reply.score - 1 }
+          : reply
+      );
+
+      console.log(newReplies);
+
       setComments((prevState) =>
         prevState.map((comment) =>
-          comment.id === commentId
-            ? { ...comment, score: comment.score - 1 }
+          comment.id === parentCommentId
+            ? {
+                ...comment,
+                replies: newReplies,
+              }
             : comment
         )
       );
     }
-
-    console.log(comments);
   }
 
   const commentsElements = comments.map((comment) => {

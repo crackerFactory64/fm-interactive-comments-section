@@ -12,6 +12,7 @@ export default function Comment(props) {
     deleteComment,
     deleteReply,
     id,
+    parentComment,
     replies,
     replyingTo,
     score,
@@ -62,7 +63,7 @@ export default function Comment(props) {
       plusDisabled: upvoteClicks % 2 === 0,
       minusDisabled: downvoteclicks % 2 !== 0,
     });
-    changeScore(true, id);
+    changeScore(true, id, parentComment);
   }
 
   function decrementScore(e) {
@@ -72,7 +73,7 @@ export default function Comment(props) {
       plusDisabled: upvoteClicks % 2 === 0,
       minusDisabled: downvoteclicks % 2 !== 0,
     });
-    changeScore(false, id);
+    changeScore(false, id, parentComment);
   }
 
   return (
@@ -194,6 +195,7 @@ export default function Comment(props) {
           {replies.map((reply) => (
             <Reply
               addNewReply={addNewReply}
+              changeScore={changeScore}
               content={reply.content}
               comments={comments}
               createdAt={reply.createdAt}

@@ -233,7 +233,7 @@ export default function Comment(props) {
           >
             No, cancel
           </button>
-          <button onClick={() => deleteComment(comments, id)}>
+          <button onClick={() => deleteComment(id, comments)}>
             Yes, delete
           </button>
         </div>

@@ -68,7 +68,7 @@ function App() {
     setComments(commentsCopy.slice()); //slice forces a re-render for some reason
   }
 
-  function deleteReply(comments, id) {
+  function deleteReply(id, comments) {
     let targetComment;
 
     comments.forEach((comment) => {
@@ -97,7 +97,6 @@ function App() {
   const commentsElements = comments.map((comment) => {
     const { content, createdAt, id, replies, replyingTo, score, user } =
       comment;
-    console.log(comment);
     return (
       <Comment
         addNewReply={addNewReply}

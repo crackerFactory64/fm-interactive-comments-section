@@ -117,8 +117,6 @@ function App() {
           : reply
       );
 
-      console.log(newReplies);
-
       setComments((prevState) =>
         prevState.map((comment) =>
           comment.id === parentCommentId

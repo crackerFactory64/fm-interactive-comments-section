@@ -1,6 +1,7 @@
 import React from "react";
 import Reply from "./Reply";
 import Input from "./Input";
+import Score from "./Score";
 
 export default function Comment(props) {
   const {
@@ -23,15 +24,23 @@ export default function Comment(props) {
 
   const [savedContent, setSavedContent] = React.useState(content);
   const [inputValue, setinputValue] = React.useState(savedContent);
-  //the following 2 variables track the number of times the user has clicked on the upvote and downvote buttons and are used to disable the corresponding button if they have already voted either way
-  const [upvoteClicks, setUpvoteClicks] = React.useState(0);
-  const [downvoteclicks, setDownvoteClicks] = React.useState(0);
   const [isReplying, setIsReplying] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
   const [buttonState, setButtonState] = React.useState({
     plusDisabled: false,
     minusDisabled: false,
   });
+  //the following 2 variables track the number of times the user has clicked on the upvote and downvote buttons and are used to disable the corresponding button if they have already voted either way
+  const [upvoteClicks, setUpvoteClicks] = React.useState(0);
+  const [downvoteClicks, setDownvoteClicks] = React.useState(0);
+
+  React.useEffect(() => {
+    setButtonState({
+      ...buttonState,
+      plusDisabled: upvoteClicks > downvoteClicks,
+      minusDisabled: downvoteClicks > upvoteClicks,
+    });
+  }, [upvoteClicks, downvoteClicks]);
 
   const dialogRef = React.useRef(null);
   const editRef = React.useRef(null);
@@ -58,21 +67,11 @@ export default function Comment(props) {
 
   function incrementScore() {
     setUpvoteClicks((prevState) => prevState + 1);
-    setButtonState({
-      ...buttonState,
-      plusDisabled: upvoteClicks % 2 === 0,
-      minusDisabled: downvoteclicks % 2 !== 0,
-    });
     changeScore(true, id, parentComment);
   }
 
   function decrementScore(e) {
     setDownvoteClicks((prevState) => prevState + 1);
-    setButtonState({
-      ...buttonState,
-      plusDisabled: upvoteClicks % 2 === 0,
-      minusDisabled: downvoteclicks % 2 !== 0,
-    });
     changeScore(false, id, parentComment);
   }
 
@@ -86,23 +85,14 @@ export default function Comment(props) {
       >
         <div>
           <div className="comment__score-controls-wrapper">
-            <div className="comment__score-controls">
-              <button
-                className="comment__score-button"
-                onClick={() => incrementScore()}
-                disabled={buttonState.plusDisabled}
-              >
-                +
-              </button>
-              <p>{score}</p>
-              <button
-                className="comment__score-button"
-                onClick={() => decrementScore()}
-                disabled={buttonState.minusDisabled}
-              >
-                -
-              </button>
-            </div>
+            <Score
+              buttonState={buttonState}
+              decrementScore={decrementScore}
+              incrementScore={incrementScore}
+              score={score}
+              setDownvoteClicks={setDownvoteClicks}
+              setUpvoteClicks={setUpvoteClicks}
+            />
           </div>
           <div className="comment__buttons mobile">
             <button

@@ -130,29 +130,31 @@ function App() {
     }
   }
 
-  const commentsElements = comments.map((comment) => {
-    const { content, createdAt, id, replies, replyingTo, score, user } =
-      comment;
-    return (
-      <Comment
-        addNewReply={addNewReply}
-        changeScore={changeScore}
-        comments={comments}
-        content={content}
-        currentUser={currentUser}
-        deleteComment={deleteComment}
-        deleteReply={deleteReply}
-        id={id}
-        key={id}
-        replyingTo={replyingTo}
-        replies={replies}
-        score={score}
-        timeAdded={createdAt}
-        username={user.username}
-        userPic={user.image.png}
-      />
-    );
-  });
+  const commentsElements = comments
+    .sort((a, b) => (a.score > b.score ? -1 : 1))
+    .map((comment) => {
+      const { content, createdAt, id, replies, replyingTo, score, user } =
+        comment;
+      return (
+        <Comment
+          addNewReply={addNewReply}
+          changeScore={changeScore}
+          comments={comments}
+          content={content}
+          currentUser={currentUser}
+          deleteComment={deleteComment}
+          deleteReply={deleteReply}
+          id={id}
+          key={id}
+          replyingTo={replyingTo}
+          replies={replies}
+          score={score}
+          timeAdded={createdAt}
+          username={user.username}
+          userPic={user.image.png}
+        />
+      );
+    });
 
   return (
     <>

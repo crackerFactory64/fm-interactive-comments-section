@@ -90,8 +90,6 @@ export default function Comment(props) {
               decrementScore={decrementScore}
               incrementScore={incrementScore}
               score={score}
-              setDownvoteClicks={setDownvoteClicks}
-              setUpvoteClicks={setUpvoteClicks}
             />
           </div>
           <div className="comment__buttons mobile">

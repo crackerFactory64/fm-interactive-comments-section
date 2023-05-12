@@ -75,6 +75,24 @@ export default function Comment(props) {
     changeScore(false, id, parentComment);
   }
 
+  function renderTimeSinceTimeAdded(timeAdded) {
+    const CURRENT_TIME = new Date().getTime();
+    const secondsSinceTimeAdded = Math.floor((CURRENT_TIME - timeAdded) / 1000);
+    switch (true) {
+      case secondsSinceTimeAdded < 10:
+        return `Just now`;
+      case secondsSinceTimeAdded < 60:
+        return `${secondsSinceTimeAdded} seconds ago`;
+      case secondsSinceTimeAdded > 60:
+        const minutes = Math.floor(secondsSinceTimeAdded / 60);
+        return `${minutes} ${minutes > 1 ? "minutes" : "minute"} ago`;
+      case secondsSinceTimeAdded > 3600:
+        return `${Math.floor(secondsSinceTimeAdded / 3600)} hours ago`;
+      case secondsSinceTimeAdded > 86400:
+        return `${Math.floor(secondsSinceTimeAdded / 84000)} days ago`;
+    }
+  }
+
   return (
     <div className="comment-wrapper">
       <article
@@ -119,7 +137,11 @@ export default function Comment(props) {
               <span className="comment__username">{username}</span>
               <span className="comment__you-label">you</span>
             </div>
-            <span className="comment_time-added">{timeAdded}</span>
+            <span className="comment_time-added">
+              {renderTimeSinceTimeAdded(timeAdded)
+                ? renderTimeSinceTimeAdded(timeAdded)
+                : timeAdded}
+            </span>
             <div className="comment__buttons">
               <button
                 className="comment__delete-button"

@@ -8,9 +8,11 @@ function App() {
   const [comments, setComments] = React.useState(data.comments);
 
   function addNewComment(content) {
+    const CURRENT_TIME = new Date().getTime();
+
     const newComment = {
       content: content,
-      createdAt: "Just now",
+      createdAt: CURRENT_TIME,
       id: Math.floor(Math.random() * 50000),
       replies: [],
       score: 0,
@@ -30,9 +32,10 @@ function App() {
   }
 
   function addNewReply(content, id, replyingTo) {
+    const CURRENT_TIME = new Date().getTime();
     const newReply = {
       content: content,
-      createdAt: "Just now",
+      createdAt: CURRENT_TIME,
       id: Math.floor(Math.random() * 50000),
       replies: [],
       replyingTo: replyingTo,

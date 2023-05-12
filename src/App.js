@@ -169,14 +169,14 @@ function App() {
     });
 
   return (
-    <>
+    <main>
       <section className="comments">{commentsElements}</section>
       <Input
         currentUser={currentUser}
         className="input main"
         addNewComment={addNewComment}
       />
-    </>
+    </main>
   );
 }
 

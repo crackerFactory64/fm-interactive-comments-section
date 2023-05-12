@@ -173,12 +173,12 @@ export default function Comment(props) {
           </p>
           <div className="comment__edit-wrapper">
             <form className="comment__edit-form">
-              <label className="hidden" htmlFor="edit-comment">
+              <label className="hidden" htmlFor={`${id}-edit-comment`}>
                 Edit your comment
               </label>
               <textarea
                 ref={editRef}
-                id="edit-comment"
+                id={`${id}-edit-comment`}
                 onChange={(e) => handleChange(e)}
                 onSubmit={(e) => {
                   e.preventDefault();

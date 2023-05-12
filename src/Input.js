@@ -48,11 +48,11 @@ export default function Input(props) {
       />
 
       <form className="input__form" onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="comment" className="hidden">
+        <label htmlFor={`${currentUser}-comment`} className="hidden">
           Enter a new comment
         </label>
         <textarea
-          id="comment"
+          id={`${currentUser}-comment`}
           onChange={handleChange}
           placeholder={replyingTo ? `@${replyingTo}` : "Add a comment..."}
           ref={replyingTo && inputRef}

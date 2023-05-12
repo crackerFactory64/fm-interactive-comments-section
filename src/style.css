@@ -399,6 +399,7 @@ body:has(.comment__delete-dialog[open]) {
 }
 
 textarea {
+  border-style: solid;
   border-color: var(--color-neutral-300);
   border-radius: 0.5em;
   resize: none;

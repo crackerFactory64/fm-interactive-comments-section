@@ -7,6 +7,15 @@ function App() {
   const currentUser = data.currentUser;
   const [comments, setComments] = React.useState(data.comments);
 
+  React.useEffect(() => {
+    if (JSON.parse(localStorage.getItem("comments")))
+      setComments(JSON.parse(localStorage.getItem("comments")));
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("comments", JSON.stringify(comments));
+  }, [comments]);
+
   function addNewComment(content) {
     const CURRENT_TIME = new Date().getTime();
 

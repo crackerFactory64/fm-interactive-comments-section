@@ -5,12 +5,11 @@ import Input from "./Input";
 
 function App() {
   const currentUser = data.currentUser;
-  const [comments, setComments] = React.useState(data.comments);
-
-  React.useEffect(() => {
-    if (JSON.parse(localStorage.getItem("comments")))
-      setComments(JSON.parse(localStorage.getItem("comments")));
-  }, []);
+  const [comments, setComments] = React.useState(
+    JSON.parse(localStorage.getItem("comments"))
+      ? JSON.parse(localStorage.getItem("comments"))
+      : data.comments
+  );
 
   React.useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comments));
@@ -40,7 +39,36 @@ function App() {
     });
   }
 
-  function editComment(commentToEdit, content) {}
+  function editComment(commentToEdit, content, parentCommentId) {
+    if (!parentCommentId) {
+      setComments((prevState) => {
+        return prevState.map((comment) =>
+          comment.id === commentToEdit
+            ? { ...comment, content: content }
+            : comment
+        );
+      });
+    } else {
+      const parentCommentCopy = comments.filter(
+        (comment) => comment.id === parentCommentId
+      )[0];
+
+      const newReplies = parentCommentCopy.replies.map((reply) =>
+        reply.id === commentToEdit ? { ...reply, content: content } : reply
+      );
+
+      setComments((prevState) => {
+        return prevState.map((comment) => {
+          return comment.id === parentCommentId
+            ? {
+                ...comment,
+                replies: newReplies,
+              }
+            : comment;
+        });
+      });
+    }
+  }
 
   function addNewReply(content, id, replyingTo) {
     const CURRENT_TIME = new Date().getTime();
@@ -157,6 +185,7 @@ function App() {
           content={content}
           currentUser={currentUser}
           deleteComment={deleteComment}
+          editComment={editComment}
           deleteReply={deleteReply}
           id={id}
           key={id}

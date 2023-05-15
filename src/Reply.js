@@ -9,6 +9,7 @@ export default function Reply(props) {
     createdAt,
     currentUser,
     deleteComment,
+    editComment,
     id,
     parentComment,
     replyingTo,
@@ -24,6 +25,7 @@ export default function Reply(props) {
       content={content}
       currentUser={currentUser}
       deleteComment={deleteComment}
+      editComment={editComment}
       id={id}
       key={id}
       parentComment={parentComment}

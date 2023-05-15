@@ -12,6 +12,7 @@ export default function Comment(props) {
     currentUser,
     deleteComment,
     deleteReply,
+    editComment,
     id,
     parentComment,
     replies,
@@ -65,6 +66,11 @@ export default function Comment(props) {
     setinputValue(e.target.value);
   }
 
+  React.useEffect(
+    () => editComment(id, savedContent, parentComment),
+    [savedContent]
+  );
+
   function incrementScore() {
     setUpvoteClicks((prevState) => prevState + 1);
     changeScore(true, id, parentComment);
@@ -78,7 +84,6 @@ export default function Comment(props) {
   function renderTimeSinceTimeAdded(timeAdded) {
     const CURRENT_TIME = new Date().getTime();
     const secondsSinceTimeAdded = Math.floor((CURRENT_TIME - timeAdded) / 1000);
-    console.log(secondsSinceTimeAdded);
     switch (true) {
       case secondsSinceTimeAdded < 10:
         return `Just now`;
@@ -212,6 +217,7 @@ export default function Comment(props) {
               createdAt={reply.createdAt}
               currentUser={currentUser}
               deleteComment={deleteReply}
+              editComment={editComment}
               id={reply.id}
               key={reply.id}
               parentComment={id}

@@ -78,6 +78,7 @@ export default function Comment(props) {
   function renderTimeSinceTimeAdded(timeAdded) {
     const CURRENT_TIME = new Date().getTime();
     const secondsSinceTimeAdded = Math.floor((CURRENT_TIME - timeAdded) / 1000);
+    console.log(secondsSinceTimeAdded);
     switch (true) {
       case secondsSinceTimeAdded < 10:
         return `Just now`;

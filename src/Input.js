@@ -20,6 +20,12 @@ export default function Input(props) {
     }
   }, 50);
 
+  function generateId() {
+    return `${Math.floor(Math.random() * 50000)}-comment`;
+  }
+
+  const id = generateId();
+
   function handleChange(e) {
     setInputValue(e.target.value);
   }
@@ -48,11 +54,11 @@ export default function Input(props) {
       />
 
       <form className="input__form" onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor={`${currentUser}-comment`} className="hidden">
+        <label htmlFor={id} className="hidden">
           Enter a new comment
         </label>
         <textarea
-          id={`${currentUser}-comment`}
+          id={id}
           onChange={handleChange}
           placeholder={replyingTo ? `@${replyingTo}` : "Add a comment..."}
           ref={replyingTo && inputRef}

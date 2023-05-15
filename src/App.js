@@ -40,6 +40,8 @@ function App() {
     });
   }
 
+  function editComment(commentToEdit, content) {}
+
   function addNewReply(content, id, replyingTo) {
     const CURRENT_TIME = new Date().getTime();
     const newReply = {

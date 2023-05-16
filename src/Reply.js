@@ -14,6 +14,7 @@ export default function Reply(props) {
     parentComment,
     replyingTo,
     score,
+    updateStaticTimes,
     user,
   } = props;
 
@@ -32,6 +33,7 @@ export default function Reply(props) {
       replyingTo={replyingTo}
       score={score}
       timeAdded={createdAt}
+      updateStaticTimes={updateStaticTimes}
       username={user.username}
       userPic={user.image.png}
     />

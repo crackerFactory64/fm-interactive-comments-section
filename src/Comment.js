@@ -81,6 +81,21 @@ export default function Comment(props) {
     changeScore(false, id, parentComment);
   }
 
+  function updateStaticTimes(timeAdded) {
+    switch (true) {
+      case timeAdded === "1 month ago":
+        return new Date().getTime() - 60000 * 40320;
+      case timeAdded === "2 weeks ago":
+        return new Date().getTime() - 60000 * 20160;
+      case timeAdded === "1 week ago":
+        return new Date().getTime() - 60000 * 10080;
+      case timeAdded === "2 days ago":
+        return new Date().getTime() - 60000 * 2880;
+      default:
+        return timeAdded;
+    }
+  }
+
   function renderTimeSinceTimeAdded(timeAdded) {
     const CURRENT_TIME = new Date().getTime();
 
@@ -111,7 +126,7 @@ export default function Comment(props) {
       return `${weeksSinceTimeAdded} ${
         weeksSinceTimeAdded === 1 ? "week" : "weeks"
       } ago`;
-    } else if (monthsSinceTimeAdded > 1 && monthsSinceTimeAdded < 12) {
+    } else if (monthsSinceTimeAdded >= 1 && monthsSinceTimeAdded < 12) {
       return `${monthsSinceTimeAdded} ${
         monthsSinceTimeAdded === 1 ? "month" : "months"
       } ago`;
@@ -165,7 +180,7 @@ export default function Comment(props) {
               <span className="comment__you-label">you</span>
             </div>
             <span className="comment_time-added">
-              {renderTimeSinceTimeAdded(timeAdded)}
+              {renderTimeSinceTimeAdded(updateStaticTimes(timeAdded))}
             </span>
             <div className="comment__buttons">
               <button
@@ -242,6 +257,7 @@ export default function Comment(props) {
               parentComment={id}
               replyingTo={reply.replyingTo}
               score={reply.score}
+              updateStaticTimes={updateStaticTimes}
               user={reply.user}
             />
           ))}

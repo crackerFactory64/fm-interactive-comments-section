@@ -92,7 +92,7 @@ button {
   --color-primary-700: hsl(238, 40%, 52%);
 
   --body-color: var(--color-neutral-800);
-  --background-color: var(--color-neutral-300);
+  --background-color: var(--color-neutral-200);
   --content-color: var(--color-neutral-100);
 
   --font-family: "Rubik", Helvetica, sans-serif;
@@ -125,7 +125,7 @@ body:has(.comment__delete-dialog[open]) {
 .container {
   display: grid;
   gap: 1em;
-  margin-block: 1em;
+  margin-block: 5em;
   margin-inline: auto;
   max-width: 750px;
   width: calc(100% - 3em);

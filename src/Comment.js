@@ -83,19 +83,40 @@ export default function Comment(props) {
 
   function renderTimeSinceTimeAdded(timeAdded) {
     const CURRENT_TIME = new Date().getTime();
+
     const secondsSinceTimeAdded = Math.floor((CURRENT_TIME - timeAdded) / 1000);
-    switch (true) {
-      case secondsSinceTimeAdded < 10:
-        return `Just now`;
-      case secondsSinceTimeAdded < 60:
-        return `${secondsSinceTimeAdded} seconds ago`;
-      case secondsSinceTimeAdded > 60:
-        const minutes = Math.floor(secondsSinceTimeAdded / 60);
-        return `${minutes} ${minutes > 1 ? "minutes" : "minute"} ago`;
-      case secondsSinceTimeAdded > 3600:
-        return `${Math.floor(secondsSinceTimeAdded / 3600)} hours ago`;
-      case secondsSinceTimeAdded > 86400:
-        return `${Math.floor(secondsSinceTimeAdded / 84000)} days ago`;
+    const minutesSinceTimeAdded = Math.floor(secondsSinceTimeAdded / 60);
+    const hoursSinceTimeAdded = Math.floor(minutesSinceTimeAdded / 60);
+    const daysSinceTimeAdded = Math.floor(hoursSinceTimeAdded / 24);
+    const weeksSinceTimeAdded = Math.floor(daysSinceTimeAdded / 7);
+    const monthsSinceTimeAdded = Math.floor(weeksSinceTimeAdded / 4);
+
+    if (secondsSinceTimeAdded < 60) {
+      return `${secondsSinceTimeAdded} ${
+        secondsSinceTimeAdded === 1 ? "second" : "seconds"
+      } ago`;
+    } else if (minutesSinceTimeAdded >= 1 && hoursSinceTimeAdded < 1) {
+      return `${minutesSinceTimeAdded} ${
+        minutesSinceTimeAdded === 1 ? "minute" : "minutes"
+      } ago`;
+    } else if (hoursSinceTimeAdded >= 1 && daysSinceTimeAdded < 1) {
+      return `${hoursSinceTimeAdded} ${
+        hoursSinceTimeAdded === 1 ? "hour" : "hours"
+      } ago`;
+    } else if (daysSinceTimeAdded >= 1 && weeksSinceTimeAdded < 1) {
+      return `${daysSinceTimeAdded} ${
+        daysSinceTimeAdded === 1 ? "day" : "days"
+      } ago`;
+    } else if (weeksSinceTimeAdded >= 1 && monthsSinceTimeAdded < 1) {
+      return `${weeksSinceTimeAdded} ${
+        weeksSinceTimeAdded === 1 ? "week" : "weeks"
+      } ago`;
+    } else if (monthsSinceTimeAdded > 1 && monthsSinceTimeAdded < 12) {
+      return `${monthsSinceTimeAdded} ${
+        monthsSinceTimeAdded === 1 ? "month" : "months"
+      } ago`;
+    } else if (monthsSinceTimeAdded > 12) {
+      return "Over a year ago";
     }
   }
 
@@ -144,9 +165,7 @@ export default function Comment(props) {
               <span className="comment__you-label">you</span>
             </div>
             <span className="comment_time-added">
-              {renderTimeSinceTimeAdded(timeAdded)
-                ? renderTimeSinceTimeAdded(timeAdded)
-                : timeAdded}
+              {renderTimeSinceTimeAdded(timeAdded)}
             </span>
             <div className="comment__buttons">
               <button
